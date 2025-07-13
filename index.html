@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <title>IaSmarKet Services</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo|Roboto:400,700">
   <style>
@@ -162,13 +163,19 @@
       main { padding: 0 2vw 60px 2vw; }
       .services-grid { gap: 20px;}
       .service-card { width: 170px; }
+      header { flex-direction: column; gap: 10px; }
     }
+
     @media (max-width: 600px) {
       header, main { padding: 0 2vw;}
       .services-grid { flex-direction: column; gap: 18px;}
       .service-card { width: 96vw; max-width: 400px;}
       .intro, .contact-form { padding: 16px 4vw;}
-    }
+      .logo img { height: 34px; }
+      nav { flex-direction: column; gap: 8px; }
+      .footer-nav { flex-direction: column; gap: 6px;}
+      .lang-switch, .darkmode-switch { margin-top: 8px; }
+    }}
     /* RTL for Arabic */
     html[lang="ar"] body, html[lang="ar"] .intro, html[lang="ar"] .contact-form { direction: rtl; }
     html[lang="ar"] .logo span { font-family: 'Cairo', sans-serif; letter-spacing: 0;}
