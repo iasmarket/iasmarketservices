@@ -1,279 +1,380 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IASMARKET Services</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IaSmarKet Services</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo|Roboto:400,700">
+  <style>
+    
+    body {
+      margin: 0;
+      font-family: 'Roboto', 'Cairo', sans-serif;
+      background: url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #222;
+    }
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(255,255,255,0.8);
+      z-index: -1;
+    }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 20px; background: rgba(255,255,255,0.9);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .logo {
+      display: flex; align-items: center;
+    }
+    .logo img {
+      height: 48px; margin-right: 12px;
+    }
+    .logo span {
+      font-size: 1.6em; font-weight: bold; letter-spacing: 1px; color: #2b617a;
+    }
+    nav {
+      display: flex; gap: 20px;
+    }
+    nav button {
+      background: none; border: none; font: inherit; cursor: pointer; padding: 8px 14px;
+      border-radius: 18px; transition: background 0.2s;
+    }
+    nav button.active, nav button:hover {
+      background: #2b617a; color: #fff;
+    }
+    .lang-switch {
+      display: flex; gap: 6px;
+    }
+    .lang-switch button {
+      background: none; border: 1px solid #2b617a;
+      color: #2b617a; border-radius: 8px; font: inherit; padding: 4px 8px;
+      cursor: pointer; margin-left: 3px;
+      transition: all 0.2s;
+    }
+    .lang-switch button.active, .lang-switch button:hover {
+      background: #2b617a; color: #fff;
+    }
+    main {
+      padding: 0 8vw 60px 8vw; max-width: 1200px; margin: auto;
+    }
+    section { display: none; }
+    section.active { display: block; animation: fadein 0.7s; }
+    @keyframes fadein {
+      from {opacity:0;transform:translateY(40px);}
+      to {opacity:1;transform:translateY(0);}
+    }
+    /* Services Grid */
+    .services-grid {
+      display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; margin: 40px 0;
+    }
+    .service-card {
+      background: rgba(255,255,255,0.92);
+      border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+      width: 220px; text-align: center; padding: 26px 14px 22px;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+      position: relative;
+    }
+    .service-card:hover {
+      box-shadow: 0 12px 40px rgba(43,97,122,0.15);
+      transform: translateY(-6px) scale(1.04);
+    }
+    .service-gif {
+      width: 90px; height: 90px; border-radius: 50%;
+      overflow: hidden; margin: 0 auto 18px;
+      border: 4px solid #2b617a11; box-shadow: 0 2px 8px #c7ecf6;
+      display: flex; align-items: center; justify-content: center;
+      background: #fff;
+      transition: box-shadow 0.3s;
+    }
+    .service-gif img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        border-radius: 50%;
+        /* gardez le filtre 'grayscale' si pause */
+    }
+    .service-gif img.paused { filter: grayscale(1) brightness(0.9); }
+    .service-card:hover .service-gif img,
+    .service-card:focus .service-gif img {
+      filter: none;
+      animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 #2b617a33;}
+      70% { box-shadow: 0 0 0 10px #2b617a11;}
+      100% { box-shadow: 0 0 0 0 #2b617a00;}
+    }
+    .service-title {
+      font-size: 1.1em; font-weight: bold; margin-bottom: 8px; color: #2b617a;
+    }
+    .service-desc {
+      font-size: 0.98em; color: #555;
+    }
+    /* Introduction */
+    .intro {
+      margin: 60px auto 0; max-width: 650px; background: rgba(255,255,255,0.96);
+      padding: 32px; border-radius: 20px; box-shadow: 0 2px 8px #aad5e3;
+      font-size: 1.1em; line-height: 1.7;
+      direction: inherit;
+    }
+    /* Contact */
+    .contact-form {
+      max-width: 420px; margin: 50px auto 0; background: rgba(255,255,255,0.96);
+      padding: 26px 24px; border-radius: 18px; box-shadow: 0 2px 8px #c7ecf6;
+      display: flex; flex-direction: column; gap: 18px;
+      direction: inherit;
+    }
+    .contact-form label { font-weight: bold; color: #2b617a; }
+    .contact-form input, .contact-form textarea {
+      border: 1px solid #b2cddc; border-radius: 7px; padding: 8px 10px; font: inherit;
+      resize: vertical; font-size: 1em; min-width: 0;
+      background: #f6fbfc;
+    }
+    .contact-form button {
+      background: #2b617a; color: #fff; border: none; border-radius: 8px;
+      padding: 10px 0; font: inherit; font-weight: bold;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .contact-form button:hover { background: #184256;}
+    /* Footer */
+    footer {
+      text-align: center; padding: 16px 0 10px; margin-top: 30px;
+      background: rgba(255,255,255,0.92);
+      position: relative; bottom: 0; width: 100%;
+    }
+    .footer-nav {
+      display: flex; justify-content: center; gap: 32px; margin-bottom: 6px;
+    }
+    .footer-nav button {
+      background: none; border: none; font: inherit; color: #2b617a;
+      cursor: pointer; margin: 0 8px; padding: 4px 9px;
+      border-radius: 7px; transition: background 0.2s;
+    }
+    .footer-nav button:hover { background: #e0f2fc; }
+    .copyright {
+      color: #666; font-size: 0.98em;
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      main { padding: 0 2vw 60px 2vw; }
+      .services-grid { gap: 20px;}
+      .service-card { width: 170px; }
+    }
+    @media (max-width: 600px) {
+      header, main { padding: 0 2vw;}
+      .services-grid { flex-direction: column; gap: 18px;}
+      .service-card { width: 96vw; max-width: 400px;}
+      .intro, .contact-form { padding: 16px 4vw;}
+    }
+    /* RTL for Arabic */
+    html[lang="ar"] body, html[lang="ar"] .intro, html[lang="ar"] .contact-form { direction: rtl; }
+    html[lang="ar"] .logo span { font-family: 'Cairo', sans-serif; letter-spacing: 0;}
+    html[lang="ar"] body { font-family: 'Cairo', 'Roboto', sans-serif;}
 
-    <style>
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* Mode sombre */
-        body.dark-mode {
-            background-color: #121212;
-            color: white;
-        }
-
-        /* Liens en mode sombre */
-        body.dark-mode a {
-            color: #00bcd4;
-        }
-
-        /* En-tête */
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Mode sombre dans l'en-tête */
-        header.dark-mode {
-            background-color: #333;
-            color: white;
-        }
-
-        header .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-left: 20px;
-        }
-
-        header .btn-light {
-            background-color: #ffffff;
-            color: #007bff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-
-        header .btn-light:hover {
-            background-color: #0056b3;
-            color: white;
-        }
-
-        .service-card {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        /* Card mode sombre */
-        .service-card.dark-mode {
-            background-color: #333;
-            border-color: #444;
-        }
-
-        /* Texte des cartes en mode sombre */
-        .service-card.dark-mode .card-body {
-            color: white;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .service-card img {
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .service-card .card-body {
-            padding: 20px;
-        }
-
-        .service-card .card-title {
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-
-        .service-card .card-text {
-            font-size: 1em;
-            margin-bottom: 20px;
-        }
-
-        footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        footer a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        .btn-light {
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-            padding: 10px 20px;
-        }
-
-        .btn-light:hover {
-            background-color: #0056b3;
-        }
-
-        /* Bouton Mode Sombre */
-        .btn-dark-mode {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            margin-left: 20px;
-        }
-
-        .btn-dark-mode:hover {
-            background-color: #444;
-        }
-    </style>
+    body.dark-mode {
+    background: #13181d !important;
+    color: #e2eaf2;
+    }
+    body.dark-mode .overlay { background: rgba(20,24,29,0.85); }
+    body.dark-mode header,
+    body.dark-mode footer,
+    body.dark-mode .service-card,
+    body.dark-mode .intro,
+    body.dark-mode .contact-form {
+    background: rgba(25,30,38,0.96) !important;
+    color: #e2eaf2 !important;
+    box-shadow: 0 2px 14px #0003;
+    }
+    body.dark-mode .service-title { color: #85d6ff; }
+    body.dark-mode nav button.active,
+    body.dark-mode nav button:hover,
+    body.dark-mode .lang-btn.active,
+    body.dark-mode .lang-btn:hover,
+    body.dark-mode .contact-form button,
+    body.dark-mode .footer-nav button:hover {
+    background: #1b384d !important;
+    color: #fff !important;
+    }
+    body.dark-mode .service-gif { background: #232830; box-shadow: 0 2px 12px #173d5a44; }
+    body.dark-mode .copyright { color: #aaa; }                  
+  </style>
 </head>
 <body>
-    <!-- En-tête -->
-    <header class="d-flex justify-content-between align-items-center">
-        <div class="logo" id="logo">
-            <img src="logo1.png" alt="Logo IASMARKET" height="50"> IaSmarKet SERVISES<sup> sarl</sup><!-- Remplacez le chemin par celui de votre logo -->
+  <div class="overlay"></div>
+  <header>
+    <div class="logo">
+      <img src="logo1.png" alt="IaSmarKet Logo">
+      <span id="logo-text">IaSmarKet services</span>
+    </div>
+    <nav>
+      <button class="nav-btn active" data-section="home" id="nav-home">Accueil</button>
+      <button class="nav-btn" data-section="intro" id="nav-intro">Introduction</button>
+      <button class="nav-btn" data-section="contact" id="nav-contact">Contact</button>
+    </nav>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="fr">FR</button>
+      <button class="lang-btn" data-lang="ar">AR</button>
+    </div>
+    <div class="darkmode-switch">
+      <button id="darkmode-toggle" title="Mode sombre">🌙</button>
+    </div>
+  </header>
+  <main>
+    <!-- Accueil / Home -->
+    <section id="home" class="active">
+      <div class="services-grid">
+        <div class="service-card" onclick="window.open('https://alamath.com','_blank')">
+          <div class="service-gif">
+            <img src="logo.png" alt="Service 1" class="paused">
+          </div>
+          <div class="service-title" data-fr="AlaMath.com" data-ar="AlaMath.com">Développement Web</div>
+          <div class="service-desc" data-fr="Plateforme éducative qui offre des cours interactifs et un accompagnement personnalisé pour les élèves de tous niveaux." data-ar="منصة تعليمية تقدم دروساََ تفاعلية ودعماً شخصياً للطلاب من جميع المستويات.">
+            Nous concevons des sites web modernes et adaptatifs pour votre entreprise.
+          </div>
         </div>
-        <div>
-            <button class="btn btn-light" onclick="setLanguage('fr')">🇫🇷 FR</button>
-            <button class="btn btn-light" onclick="setLanguage('en')">🇬🇧 EN</button>
-            <button class="btn btn-light" onclick="setLanguage('ar')">🇦🇪 AR</button>
-            <button class="btn btn-dark-mode" id="darkModeToggle">🌙 Mode Sombre</button>
+        <div class="service-card" onclick="window.open('https://www.example.com/service2','_blank')">
+          <div class="service-gif">
+            <img src="logo4.png" alt="Service 2" class="paused">
+          </div>
+          <div class="service-title" data-fr="Consulting IT" data-ar="استشارات تقنية المعلومات">Consulting IT</div>
+          <div class="service-desc" data-fr="Des experts à votre écoute pour réussir votre transformation digitale." data-ar="خبراء لمساعدتك في نجاح التحول الرقمي.">
+            Des experts à votre écoute pour réussir votre transformation digitale.
+          </div>
         </div>
-    </header>
-    
-    <!-- Accueil -->
-    <section class="container my-5">
-        <h2 class="text-center mb-4" id="servicesTitle">Nos Services</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card service-card">
-                    <img src="service1.jpg" class="card-img-top" alt="Service 1">
-                    <div class="card-body">
-                        <h5 class="card-title" id="serviceTitle1">Service 1</h5>
-                        <p class="card-text" id="serviceText1">Description du service 1.</p>
-                        <button class="btn btn-light" id="learnMoreBtn1">En savoir plus</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card service-card">
-                    <img src="logo.png" class="card-img-top" alt="Formation/enseignement">
-                    <div class="card-body">
-                        <h5 class="card-title" id="serviceTitle2">AlaMath.com</h5>
-                        <p class="card-text" id="serviceText1">AlaMath.com est une plateforme éducative innovante dédiée à l’apprentissage.</p>
-                        <button class="btn btn-light" id="learnMoreBtn2">En savoir plus</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Ajouter d'autres services ici -->
+        <div class="service-card" onclick="window.open('https://www.example.com/service3','_blank')">
+          <div class="service-gif">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTJ5YXVyZ2NqZnFzZ3U2N2RjY2tjN2N0d3B6cWl4bW1oZ3pucG1jcyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/26BRv0ThflsHCqDrG/giphy.gif" alt="Service 3" class="paused">
+          </div>
+          <div class="service-title" data-fr="Support & Assistance" data-ar="الدعم والمساعدة">Support & Assistance</div>
+          <div class="service-desc" data-fr="Une équipe réactive pour répondre à tous vos besoins techniques." data-ar="فريق سريع الاستجابة لخدمة جميع احتياجاتك التقنية.">
+            Une équipe réactive pour répondre à tous vos besoins techniques.
+          </div>
         </div>
+      </div>
     </section>
-    
-    <!-- À Propos -->
-    <section class="container my-5">
-        <h2 class="text-center mb-4" id="aboutTitle">À Propos de nous</h2>
-        <p id="aboutText">IASMARKET SERVICES est une société spécialisée dans la collecte d'offres et la gestion de promotions dans divers secteurs tels que l'électronique, l'automobile, les produits ménagers et bien plus encore. Nous vous aidons à trouver les meilleures affaires sur le marché mondial.</p>
+    <!-- Introduction -->
+    <section id="intro" class="intro">
+      <div data-fr="IaSmarKet services est une société innovante spécialisée dans le développement web, le conseil IT et l’assistance technique. Notre mission est d’accompagner nos clients vers le succès digital grâce à des solutions adaptées et un service sur-mesure."
+           data-ar="IaSmarKet services هي شركة مبتكرة متخصصة في تطوير الويب والاستشارات التقنية والدعم الفني. مهمتنا هي مرافقة عملائنا نحو النجاح الرقمي من خلال حلول ملائمة وخدمة مخصصة.">
+        IaSmarKet services est une société innovante spécialisée dans le développement web, le conseil IT et l’assistance technique. Notre mission est d’accompagner nos clients vers le succès digital grâce à des solutions adaptées et un service sur-mesure.
+      </div>
     </section>
-    
     <!-- Contact -->
-    <section class="container my-5">
-        <h2 class="text-center mb-4" id="contactTitle">Contactez-nous</h2>
-        <form>
-            <div class="mb-3">
-                <label class="form-label" for="name" id="nameLabel">Nom</label>
-                <input type="text" class="form-control" id="name" placeholder="Votre nom">
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="email" id="emailLabel">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Votre email">
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="message" id="messageLabel">Message</label>
-                <textarea class="form-control" id="message" placeholder="Votre message"></textarea>
-            </div>
-            <button type="submit" class="btn btn-light" id="submitBtn">Envoyer</button>
-        </form>
+    <section id="contact">
+      <form class="contact-form" onsubmit="alert('Votre message a été envoyé !'); return false;">
+        <label for="name" data-fr="Nom" data-ar="الاسم">Nom</label>
+        <input id="name" name="name" type="text" required placeholder="Votre nom">
+        <label for="email" data-fr="Email" data-ar="البريد الإلكتروني">Email</label>
+        <input id="email" name="email" type="email" required placeholder="votre@email.com">
+        <label for="msg" data-fr="Message" data-ar="الرسالة">Message</label>
+        <textarea id="msg" name="msg" rows="4" required placeholder="Votre message..."></textarea>
+        <button type="submit" data-fr="Envoyer" data-ar="إرسال">Envoyer</button>
+      </form>
     </section>
-    
-    <!-- Pied de page -->
-    <footer>
-        <p>&copy; 2024 IaSmarKet SERVICES<sup> SARL </sup> | <a href="#">Mentions légales</a> | <a href="#">Contact</a></p>
-    </footer>
-
-    <!-- Script JavaScript pour activer/désactiver le mode sombre et changer la langue -->
-    <script>
-        // Mode sombre
-        document.getElementById('darkModeToggle').addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            const cards = document.querySelectorAll('.service-card');
-            cards.forEach(card => card.classList.toggle('dark-mode'));
-        });
-
-        // Traduction
-        function setLanguage(language) {
-            if (language === 'fr') {
-                document.getElementById('logo').innerText = 'IASMARKET';
-                document.getElementById('servicesTitle').innerText = 'Nos Services';
-                document.getElementById('serviceTitle1').innerText = 'Service 1';
-                document.getElementById('serviceText1').innerText = 'Description du service 1.';
-                document.getElementById('learnMoreBtn1').innerText = 'En savoir plus';
-                document.getElementById('aboutTitle').innerText = 'À Propos de nous';
-                document.getElementById('aboutText').innerText = 'IASMARKET est une société spécialisée dans la collecte d\'offres et la gestion de promotions dans divers secteurs tels que l\'électronique, l\'automobile, les produits ménagers et bien plus encore. Nous vous aidons à trouver les meilleures affaires sur le marché mondial.';
-                document.getElementById('contactTitle').innerText = 'Contactez-nous';
-                document.getElementById('nameLabel').innerText = 'Nom';
-                document.getElementById('emailLabel').innerText = 'Email';
-                document.getElementById('messageLabel').innerText = 'Message';
-                document.getElementById('submitBtn').innerText = 'Envoyer';
-            } else if (language === 'en') {
-                document.getElementById('logo').innerText = 'IASMARKET';
-                document.getElementById('servicesTitle').innerText = 'Our Services';
-                document.getElementById('serviceTitle1').innerText = 'Service 1';
-                document.getElementById('serviceText1').innerText = 'Description of service 1.';
-                document.getElementById('learnMoreBtn1').innerText = 'Learn More';
-                document.getElementById('aboutTitle').innerText = 'About Us';
-                document.getElementById('aboutText').innerText = 'IASMARKET is a company specializing in collecting offers and managing promotions in various sectors such as electronics, automotive, household products, and more. We help you find the best deals in the global market.';
-                document.getElementById('contactTitle').innerText = 'Contact Us';
-                document.getElementById('nameLabel').innerText = 'Name';
-                document.getElementById('emailLabel').innerText = 'Email';
-                document.getElementById('messageLabel').innerText = 'Message';
-                document.getElementById('submitBtn').innerText = 'Send';
-            } else if (language === 'ar') {
-                document.getElementById('logo').innerText = 'IASMARKET';
-                document.getElementById('servicesTitle').innerText = 'خدماتنا';
-                document.getElementById('serviceTitle1').innerText = 'الخدمة 1';
-                document.getElementById('serviceText1').innerText = 'وصف الخدمة 1.';
-                document.getElementById('learnMoreBtn1').innerText = 'اعرف أكثر';
-                document.getElementById('aboutTitle').innerText = 'عنّا';
-                document.getElementById('aboutText').innerText = 'IASMARKET هي شركة متخصصة في جمع العروض وإدارة الترويجات في مختلف القطاعات مثل الإلكترونيات والسيارات والمنتجات المنزلية وأكثر من ذلك. نحن نساعدك في العثور على أفضل العروض في السوق العالمية.';
-                document.getElementById('contactTitle').innerText = 'اتصل بنا';
-                document.getElementById('nameLabel').innerText = 'الاسم';
-                document.getElementById('emailLabel').innerText = 'البريد الإلكتروني';
-                document.getElementById('messageLabel').innerText = 'الرسالة';
-                document.getElementById('submitBtn').innerText = 'إرسال';
-            }
+  </main>
+  <footer>
+    <div class="footer-nav">
+      <button onclick="showSection('home')" id="footer-home">Accueil</button>
+      <button onclick="showSection('intro')" id="footer-intro">Introduction</button>
+      <button onclick="showSection('contact')" id="footer-contact">Contact</button>
+    </div>
+    <div class="copyright">&copy; 2025 IaSmarKet services</div>
+  </footer>
+  <script>
+    // Navigation
+    function showSection(sec) {
+      document.querySelectorAll('nav .nav-btn, .footer-nav button').forEach(btn=>btn.classList.remove('active'));
+      document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+      document.getElementById(sec).classList.add('active');
+      document.querySelector(`#nav-${sec}`)?.classList.add('active');
+      document.getElementById(`footer-${sec}`)?.classList.add('active');
+    }
+    document.querySelectorAll('.nav-btn').forEach(btn=>{
+      btn.onclick = ()=>showSection(btn.dataset.section);
+    });
+    // Activate GIF on hover
+    document.querySelectorAll('.service-card').forEach(card=>{
+      card.onmouseenter = ()=>{ card.querySelector('img').classList.remove('paused'); };
+      card.onmouseleave = ()=>{ card.querySelector('img').classList.add('paused'); };
+    });
+    // Language switching
+    function switchLang(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn=>{
+        btn.classList.toggle('active', btn.dataset.lang===lang);
+      });
+      // Menu
+      const labels = {
+        fr: {
+          'nav-home':'Accueil', 'nav-intro':'Introduction', 'nav-contact':'Contact',
+          'footer-home':'Accueil', 'footer-intro':'Introduction', 'footer-contact':'Contact',
+          'logo-text':'IaSmarKet services'
+        },
+        ar: {
+          'nav-home':'الرئيسية', 'nav-intro':'نبذة', 'nav-contact':'اتصال',
+          'footer-home':'الرئيسية', 'footer-intro':'نبذة', 'footer-contact':'اتصال',
+          'logo-text':'خدمات IaSmarKet'
         }
-    </script>
+      };
+      for (let id in labels[lang]) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = labels[lang][id];
+      }
+      // Section content
+      document.querySelectorAll('[data-fr]').forEach(el=>{
+        el.textContent = el.getAttribute('data-'+lang);
+      });
+      // Placeholders
+      document.querySelectorAll('.contact-form input, .contact-form textarea').forEach(el=>{
+        if (el.hasAttribute('placeholder')) {
+          el.placeholder = lang === 'fr'
+            ? {name:"Votre nom", email:"votre@email.com", msg:"Votre message..."}[el.name] || ''
+            : {name:"اسمك", email:"بريدك الإلكتروني", msg:"رسالتك..."}[el.name] || '';
+        }
+      });
+      // Direction
+      document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    }
+    document.querySelectorAll('.lang-btn').forEach(btn=>{
+      btn.onclick = ()=>switchLang(btn.dataset.lang);
+    });
+    // Initial language
+    switchLang('fr');
+  </script>
+  <script>
+  // ... ton script existant ...
+  // Dark mode
+  const darkToggle = document.getElementById('darkmode-toggle');
+  function setDarkMode(on) {
+    document.body.classList.toggle('dark-mode', on);
+    localStorage.setItem('dark-mode', on ? '1' : '0');
+    darkToggle.textContent = on ? '☀️' : '🌙';
+    darkToggle.title = on
+      ? (document.documentElement.lang === 'ar' ? 'وضع النهار' : 'Mode clair')
+      : (document.documentElement.lang === 'ar' ? 'الوضع الليلي' : 'Mode sombre');
+  }
+  darkToggle.onclick = () => setDarkMode(!document.body.classList.contains('dark-mode'));
+  // Au chargement, applique le mode stocké
+  setDarkMode(localStorage.getItem('dark-mode') === '1');
+
+  // Mise à jour du titre du bouton selon la langue
+  function updateDarkBtnTitle() {
+    if (document.body.classList.contains('dark-mode')) {
+      darkToggle.title = document.documentElement.lang === 'ar' ? 'وضع النهار' : 'Mode clair';
+    } else {
+      darkToggle.title = document.documentElement.lang === 'ar' ? 'الوضع الليلي' : 'Mode sombre';
+    }
+  }
+  // Appeler lors du changement de langue
+  const oldSwitchLang = switchLang;
+  switchLang = function(lang) {
+    oldSwitchLang(lang);
+    updateDarkBtnTitle();
+  }
+  updateDarkBtnTitle();
+</script>
 </body>
 </html>
