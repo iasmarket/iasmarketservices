@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Client - LOGICAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #00c9a7;
+            --main-dark: #008a6f;
+            --bg: #f4f8fb;
+            --card: #fff;
+            --text: #232526;
+            --accent: #eaeaea;
+            --shadow: 0 2px 24px 0 rgba(0,0,0,0.12);
+        }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: var(--bg) url('https://www.transparenttextures.com/patterns/cubes.png');
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.2s, color 0.2s;
+            direction: ltr;
+        }
+        .dark-mode {
+            background: linear-gradient(120deg, #232526 60%, #2b5876 100%);
+            color: #f4f8fb;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px 0 32px;
+            background: transparent;
+            position: relative;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-container.ltr { flex-direction: row; }
+        .logo-container.rtl { flex-direction: row-reverse; }
+        .logo-img {
+            height: 48px;
+        }
+        .logo-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--main);
+        }
+        .switch-container {
+            display: flex;
+            gap: 8px;
+        }
+        .switch-container.ltr { flex-direction: row; }
+        .switch-container.rtl { flex-direction: row-reverse; }
+        .lang-btn, .theme-btn {
+            background: var(--main);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 7px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            transition: background 0.2s, color 0.2s;
+        }
+        .lang-btn.active, .theme-btn.active, .lang-btn:hover, .theme-btn:hover {
+            background: var(--main-dark);
+            color: #fff;
+        }
+        nav {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            margin: 22px 0 0 0;
+        }
+        .nav-btn {
+            background: var(--card);
+            color: var(--main-dark);
+            border: 2px solid var(--main);
+            border-radius: 22px;
+            padding: 10px 30px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s, border 0.18s;
+        }
+        .nav-btn.active, .nav-btn:hover {
+            background: var(--main);
+            color: #fff;
+            border: 2px solid var(--main-dark);
+        }
+        .card {
+            max-width: 600px;
+            margin: 38px auto 0 auto;
+            background: var(--card);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 36px 30px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dark-mode .card {
+            background: #2b5876;
+            color: #f4f8fb;
+        }
+        .card.rtl {
+            direction: rtl;
+            text-align: right;
+        }
+        .card.ltr {
+            direction: ltr;
+            text-align: left;
+        }
+        h2 {
+            color: #008a6f;
+            text-align: center;
+            margin-bottom: 26px;
+            font-weight: 700;
+            font-size: 1.7rem;
+        }
+        label {
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+            margin-top: 7px;
+            font-size: 1rem;
+            background: #fafafa;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #00c9a7;
+            outline: none;
+        }
+        .radio-group {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+        .btn-main {
+            background: #00c9a7;
+            color: #fff;
+            font-weight: 700;
+            padding: 13px 0;
+            border: none;
+            border-radius: 18px;
+            font-size: 1.08rem;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+            transition: background 0.2s;
+        }
+        .btn-main:hover {
+            background: #008a6f;
+        }
+        .success, .error {
+            text-align: center;
+            margin: 18px 0 0 0;
+            font-size: 1.11rem;
+            border-radius: 13px;
+            padding: 9px 0;
+        }
+        .success { background: #d8fae9; color: #008a6f;}
+        .error { background: #ffd3d3; color: #9b1212;}
+        .file-group {
+            margin-top: 10px;
+        }
+        @media (max-width: 700px) {
+            .card { padding: 18px 7px;}
+            h2 { font-size: 1.3rem;}
+        }
+        footer {
+            background: var(--main-dark);
+            color: #fff;
+            text-align: center;
+            padding: 18px 0 10px 0;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 0 0 18px 18px;
+            margin-top: 48px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="logo-container" class="logo-container ltr">
+            <img src="https://raw.githubusercontent.com/iasmarket/iasmarket/main/logo.png" alt="IaSmarket Logo" class="logo-img" />
+            <span class="logo-title">LOGICAL</span>
+        </div>
+        <div id="switch-container" class="switch-container ltr">
+            <button class="lang-btn" id="lang-fr" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn" id="lang-ar" onclick="setLang('ar')">AR</button>
+            <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+            <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Changer le mode">🌓</button>
+        </div>
+    </header>
+    <nav>
+        <button class="nav-btn" id="nav-home" onclick="goTo('index.html');return false;">Home</button>
+    </nav>
+    <div class="card ltr" id="client-card">
+        <h2 id="form-title">Espace Client</h2>
+        <form id="clientForm">
+            <div class="form-group">
+                <label id="label-type">Type de client :</label>
+                <div class="radio-group" id="radio-type">
+                    <label><input type="radio" name="clientType" value="physique" checked> <span id="type-physique">Personne physique</span></label>
+                    <label><input type="radio" name="clientType" value="morale"> <span id="type-morale">Personne morale</span></label>
+                </div>
+            </div>
+            <div id="physique-fields">
+                <div class="form-group">
+                    <label for="name" id="label-name">Nom & Prénom :</label>
+                    <input type="text" id="name" name="name" required placeholder="Votre nom et prénom">
+                </div>
+                <div class="form-group">
+                    <label for="email" id="label-email">Email :</label>
+                    <input type="email" id="email" name="email" required placeholder="exemple@mail.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone" id="label-phone">Téléphone :</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Votre numéro">
+                </div>
+            </div>
+            <div id="morale-fields" style="display:none;">
+                <div class="form-group">
+                    <label for="company" id="label-company">Raison sociale :</label>
+                    <input type="text" id="company" name="company" placeholder="Nom de l’entreprise">
+                </div>
+                <div class="form-group">
+                    <label for="nif" id="label-nif">NIF / Registre :</label>
+                    <input type="text" id="nif" name="nif" placeholder="Identifiant fiscal">
+                </div>
+                <div class="form-group">
+                    <label for="responsible" id="label-responsible">Nom du responsable :</label>
+                    <input type="text" id="responsible" name="responsible" placeholder="Nom du responsable">
+                </div>
+                <div class="form-group">
+                    <label for="emailMorale" id="label-emailMorale">Email :</label>
+                    <input type="email" id="emailMorale" name="emailMorale" placeholder="contact@entreprise.com">
+                </div>
+                <div class="form-group">
+                    <label for="phoneMorale" id="label-phoneMorale">Téléphone :</label>
+                    <input type="tel" id="phoneMorale" name="phoneMorale" placeholder="Numéro de l’entreprise">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description" id="label-description">Description du projet / Cahier des charges :</label>
+                <textarea id="description" name="description" rows="3" required placeholder="Décrivez votre besoin ou attachez le cahier des charges..."></textarea>
+            </div>
+            <div class="form-group file-group">
+                <label for="specFile" id="label-specFile">Attacher un fichier (PDF, DOC, etc) :</label>
+                <input type="file" id="specFile" name="specFile" accept=".pdf,.doc,.docx">
+            </div>
+            <button class="btn-main" type="submit" id="btn-submit">Envoyer</button>
+            <div id="resultMsg"></div>
+        </form>
+    </div>
+    <footer>
+        <span id="footer-rights">© 2025 IaSmarket Services. Tous droits réservés.</span>
+    </footer>
+    <script>
+        // Traductions
+        const translations = {
+            fr: {
+                form_title: "Espace Client",
+                label_type: "Type de client :",
+                type_physique: "Personne physique",
+                type_morale: "Personne morale",
+                label_name: "Nom & Prénom :",
+                label_email: "Email :",
+                label_phone: "Téléphone :",
+                label_company: "Raison sociale :",
+                label_nif: "NIF / Registre :",
+                label_responsible: "Nom du responsable :",
+                label_emailMorale: "Email :",
+                label_phoneMorale: "Téléphone :",
+                label_description: "Description du projet / Cahier des charges :",
+                label_specFile: "Attacher un fichier (PDF, DOC, etc) :",
+                btn_submit: "Envoyer",
+                rights: "© 2025 IaSmarket Services. Tous droits réservés.",
+                direction: "ltr",
+                msg_success: "Demande envoyée avec succès ! Nous reviendrons vers vous rapidement.",
+                msg_error: "Erreur lors de l'envoi.",
+                msg_conn_error: "Erreur de connexion. Veuillez réessayer plus tard.",
+                nav_home: "Accueil"
+            },
+            ar: {
+                form_title: "فضاء العملاء",
+                label_type: "نوع العميل :",
+                type_physique: "شخص طبيعي",
+                type_morale: "شخص معنوي",
+                label_name: "الاسم الكامل :",
+                label_email: "البريد الإلكتروني :",
+                label_phone: "الهاتف :",
+                label_company: "اسم الشركة :",
+                label_nif: "الرقم الجبائي / السجل :",
+                label_responsible: "اسم المسؤول :",
+                label_emailMorale: "البريد الإلكتروني :",
+                label_phoneMorale: "هاتف الشركة :",
+                label_description: "وصف المشروع / دفتر الشروط :",
+                label_specFile: "إرفاق ملف (PDF، DOC، إلخ) :",
+                btn_submit: "إرسال",
+                rights: "© 2025 IaSmarket Services. جميع الحقوق محفوظة.",
+                direction: "rtl",
+                msg_success: "تم إرسال الطلب بنجاح! سنعود إليكم قريبًا.",
+                msg_error: "حدث خطأ أثناء الإرسال.",
+                msg_conn_error: "خطأ في الاتصال. يرجى المحاولة لاحقًا.",
+                nav_home: "الرئيسية"
+            },
+            en: {
+                form_title: "Client Space",
+                label_type: "Client type:",
+                type_physique: "Individual",
+                type_morale: "Legal entity",
+                label_name: "Full name:",
+                label_email: "Email:",
+                label_phone: "Phone:",
+                label_company: "Company name:",
+                label_nif: "NIF / Register:",
+                label_responsible: "Responsible person:",
+                label_emailMorale: "Email:",
+                label_phoneMorale: "Company phone:",
+                label_description: "Project description / Specifications:",
+                label_specFile: "Attach a file (PDF, DOC, etc):",
+                btn_submit: "Send",
+                rights: "© 2025 IaSmarket Services. All rights reserved.",
+                direction: "ltr",
+                msg_success: "Request sent successfully! We will contact you soon.",
+                msg_error: "Error while sending.",
+                msg_conn_error: "Connection error. Please try again later.",
+                nav_home: "Home"
+            }
+        };
+
+        let currentLang = "fr";
+        let darkMode = false;
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.body.style.direction = translations[lang].direction;
+            let logoContainer = document.getElementById('logo-container');
+            logoContainer.className = "logo-container " + translations[lang].direction;
+            let switchContainer = document.getElementById('switch-container');
+            switchContainer.className = "switch-container " + translations[lang].direction;
+            let card = document.getElementById('client-card');
+            card.classList.remove("rtl","ltr");
+            card.classList.add(translations[lang].direction);
+            let navHome = document.getElementById('nav-home');
+            navHome.textContent = translations[lang].nav_home;
+            navHome.style.float = translations[lang].direction === "rtl" ? "right" : "left";
+            document.getElementById('form-title').textContent = translations[lang].form_title;
+            document.getElementById('label-type').textContent = translations[lang].label_type;
+            document.getElementById('type-physique').textContent = translations[lang].type_physique;
+            document.getElementById('type-morale').textContent = translations[lang].type_morale;
+            document.getElementById('label-name').textContent = translations[lang].label_name;
+            document.getElementById('label-email').textContent = translations[lang].label_email;
+            document.getElementById('label-phone').textContent = translations[lang].label_phone;
+            document.getElementById('label-company').textContent = translations[lang].label_company;
+            document.getElementById('label-nif').textContent = translations[lang].label_nif;
+            document.getElementById('label-responsible').textContent = translations[lang].label_responsible;
+            document.getElementById('label-emailMorale').textContent = translations[lang].label_emailMorale;
+            document.getElementById('label-phoneMorale').textContent = translations[lang].label_phoneMorale;
+            document.getElementById('label-description').textContent = translations[lang].label_description;
+            document.getElementById('label-specFile').textContent = translations[lang].label_specFile;
+            document.getElementById('btn-submit').textContent = translations[lang].btn_submit;
+            document.getElementById('footer-rights').textContent = translations[lang].rights;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+        }
+
+        function goTo(page) {
+            window.location.href = page;
+        }
+
+        document.getElementById('radio-type').addEventListener('change', function(e) {
+            const type = document.querySelector('input[name="clientType"]:checked').value;
+            document.getElementById('physique-fields').style.display = (type === "physique") ? "block" : "none";
+            document.getElementById('morale-fields').style.display = (type === "morale") ? "block" : "none";
+            document.getElementById('name').required = (type === "physique");
+            document.getElementById('email').required = (type === "physique");
+            document.getElementById('phone').required = (type === "physique");
+            document.getElementById('company').required = (type === "morale");
+            document.getElementById('nif').required = (type === "morale");
+            document.getElementById('responsible').required = (type === "morale");
+            document.getElementById('emailMorale').required = (type === "morale");
+            document.getElementById('phoneMorale').required = (type === "morale");
+        });
+
+        document.getElementById('clientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const type = document.querySelector('input[name="clientType"]:checked').value;
+            let formData = new FormData();
+            formData.append("type", type);
+
+            if (type === "physique") {
+                formData.append("name", form.name.value);
+                formData.append("email", form.email.value);
+                formData.append("phone", form.phone.value);
+            } else {
+                formData.append("company", form.company.value);
+                formData.append("nif", form.nif.value);
+                formData.append("responsible", form.responsible.value);
+                formData.append("emailMorale", form.emailMorale.value);
+                formData.append("phoneMorale", form.phoneMorale.value);
+            }
+            formData.append("description", form.description.value);
+            if (form.specFile.files.length > 0) {
+                formData.append("specFile", form.specFile.files[0]);
+            }
+
+            fetch("https://your-cloudflare-tunnel-url.com/api/client/register", {
+                method: "POST",
+                body: formData
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.success) {
+                    showMsg(translations[currentLang].msg_success, false);
+                    form.reset();
+                    document.getElementById('physique-fields').style.display = "block";
+                    document.getElementById('morale-fields').style.display = "none";
+                } else {
+                    showMsg(translations[currentLang].msg_error + " " + (data.message || ""), true);
+                }
+            })
+            .catch(() => {
+                showMsg(translations[currentLang].msg_conn_error, true);
+            });
+        });
+
+        function showMsg(msg, isError) {
+            const resultDiv = document.getElementById('resultMsg');
+            resultDiv.textContent = msg;
+            resultDiv.className = isError ? 'error' : 'success';
+        }
+
+        function toggleTheme() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+            document.getElementById('theme-btn').classList.toggle('active', darkMode);
+        }
+
+        window.onload = function() {
+            setLang(currentLang);
+        };
+    </script>
+</body>
+</html>
