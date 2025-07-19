@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Talent - LOGICAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #00c9a7;
+            --main-dark: #008a6f;
+            --bg: #f4f8fb;
+            --card: #fff;
+            --text: #232526;
+            --accent: #eaeaea;
+            --shadow: 0 2px 24px 0 rgba(0,0,0,0.12);
+        }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: var(--bg) url('https://www.transparenttextures.com/patterns/cubes.png');
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.2s, color 0.2s;
+            direction: ltr;
+        }
+        .dark-mode {
+            background: linear-gradient(120deg, #232526 60%, #2b5876 100%);
+            color: #f4f8fb;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px 0 32px;
+            background: transparent;
+            position: relative;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-container.ltr { flex-direction: row; }
+        .logo-container.rtl { flex-direction: row-reverse; }
+        .logo-img {
+            height: 48px;
+        }
+        .logo-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--main);
+        }
+        .switch-container {
+            display: flex;
+            gap: 8px;
+        }
+        .switch-container.ltr { flex-direction: row; }
+        .switch-container.rtl { flex-direction: row-reverse; }
+        .lang-btn, .theme-btn {
+            background: var(--main);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 7px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            transition: background 0.2s, color 0.2s;
+        }
+        .lang-btn.active, .theme-btn.active, .lang-btn:hover, .theme-btn:hover {
+            background: var(--main-dark);
+            color: #fff;
+        }
+        nav {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            margin: 22px 0 0 0;
+        }
+        .nav-btn {
+            background: var(--card);
+            color: var(--main-dark);
+            border: 2px solid var(--main);
+            border-radius: 22px;
+            padding: 10px 30px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s, border 0.18s;
+        }
+        .nav-btn.active, .nav-btn:hover {
+            background: var(--main);
+            color: #fff;
+            border: 2px solid var(--main-dark);
+        }
+        .card {
+            max-width: 600px;
+            margin: 38px auto 0 auto;
+            background: var(--card);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 36px 30px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dark-mode .card {
+            background: #2b5876;
+            color: #f4f8fb;
+        }
+        .card.rtl {
+            direction: rtl;
+            text-align: right;
+        }
+        .card.ltr {
+            direction: ltr;
+            text-align: left;
+        }
+        h2 {
+            color: #008a6f;
+            text-align: center;
+            margin-bottom: 26px;
+            font-weight: 700;
+            font-size: 1.7rem;
+        }
+        label {
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+            margin-top: 7px;
+            font-size: 1rem;
+            background: #fafafa;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #00c9a7;
+            outline: none;
+        }
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 10px;
+        }
+        .service-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #f3f7f6;
+            padding: 10px 14px;
+            border-radius: 10px;
+        }
+        .service-row label, .service-row select {
+            margin: 0;
+        }
+        .service-row select {
+            min-width: 160px;
+            font-size: 0.97rem;
+        }
+        .btn-main {
+            background: #00c9a7;
+            color: #fff;
+            font-weight: 700;
+            padding: 13px 0;
+            border: none;
+            border-radius: 18px;
+            font-size: 1.08rem;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+            transition: background 0.2s;
+        }
+        .btn-main:hover {
+            background: #008a6f;
+        }
+        .success, .error {
+            text-align: center;
+            margin: 18px 0 0 0;
+            font-size: 1.11rem;
+            border-radius: 13px;
+            padding: 9px 0;
+        }
+        .success { background: #d8fae9; color: #008a6f;}
+        .error { background: #ffd3d3; color: #9b1212;}
+        @media (max-width: 700px) {
+            .card { padding: 18px 7px;}
+            h2 { font-size: 1.3rem;}
+        }
+        footer {
+            background: var(--main-dark);
+            color: #fff;
+            text-align: center;
+            padding: 18px 0 10px 0;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 0 0 18px 18px;
+            margin-top: 48px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="logo-container" class="logo-container ltr">
+            <img src="https://raw.githubusercontent.com/iasmarket/iasmarket/main/logo.png" alt="IaSmarket Logo" class="logo-img" />
+            <span class="logo-title">LOGICAL</span>
+        </div>
+        <div id="switch-container" class="switch-container ltr">
+            <button class="lang-btn" id="lang-fr" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn" id="lang-ar" onclick="setLang('ar')">AR</button>
+            <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+            <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Changer le mode">🌓</button>
+        </div>
+    </header>
+    <nav>
+        <button class="nav-btn" id="nav-home" onclick="goTo('index.html');return false;">Home</button>
+    </nav>
+
+    <div class="card ltr" id="talent-card">
+        <h2 id="form-title">Inscription Talent</h2>
+        <form id="talentForm">
+            <div class="form-group">
+                <label for="name" id="label-name">Nom complet :</label>
+                <input type="text" id="name" name="name" required placeholder="Votre nom et prénom">
+            </div>
+            <div class="form-group">
+                <label for="email" id="label-email">Email :</label>
+                <input type="email" id="email" name="email" required placeholder="exemple@mail.com">
+            </div>
+            <div class="form-group">
+                <label for="portfolio" id="label-portfolio">Portfolio ou lien professionnel :</label>
+                <input type="url" id="portfolio" name="portfolio" placeholder="Lien (Behance, Github, etc)">
+            </div>
+            <div class="form-group">
+                <label id="label-services">Services proposés :</label>
+                <div class="services-list" id="servicesList"></div>
+            </div>
+            <div class="form-group">
+                <label for="bio" id="label-bio">Présentation / Bio :</label>
+                <textarea id="bio" name="bio" rows="3" placeholder="Quelques mots sur vous..."></textarea>
+            </div>
+            <button class="btn-main" type="submit" id="btn-submit">Envoyer</button>
+            <div id="resultMsg"></div>
+        </form>
+    </div>
+    <footer>
+        <span id="footer-rights">© 2025 IaSmarket Services. Tous droits réservés.</span>
+    </footer>
+    <script>
+        // Traductions
+        const translations = {
+            fr: {
+                form_title: "Inscription Talent",
+                label_name: "Nom complet :",
+                label_email: "Email :",
+                label_portfolio: "Portfolio ou lien professionnel :",
+                label_services: "Services proposés :",
+                label_bio: "Présentation / Bio :",
+                btn_submit: "Envoyer",
+                rights: "© 2025 IaSmarket Services. Tous droits réservés.",
+                direction: "ltr",
+                services: [
+                    { id: 'dev', label: 'Développement web/app' },
+                    { id: 'design', label: 'Design graphique' },
+                    { id: 'video', label: 'Montage vidéo' },
+                    { id: 'animation', label: 'Animation/3D' },
+                    { id: 'audio', label: 'Production audio' },
+                    { id: 'marketing', label: 'Marketing digital' }
+                ],
+                levels: [
+                    { value: 'junior', label: 'Débutant' },
+                    { value: 'intermediate', label: 'Intermédiaire' },
+                    { value: 'senior', label: 'Expert' }
+                ],
+                msg_noservice: "Veuillez sélectionner au moins un service.",
+                msg_success: "Inscription envoyée avec succès ! Nous vous contacterons bientôt.",
+                msg_error: "Erreur lors de l'envoi.",
+                msg_conn_error: "Erreur de connexion. Veuillez réessayer plus tard.",
+                nav_home: "Accueil"
+            },
+            ar: {
+                form_title: "تسجيل المبدع",
+                label_name: "الاسم الكامل :",
+                label_email: "البريد الإلكتروني :",
+                label_portfolio: "رابط أعمال أو ملف شخصي :",
+                label_services: "الخدمات التي تقدمها :",
+                label_bio: "نبذة عنك :",
+                btn_submit: "إرسال",
+                rights: "© 2025 IaSmarket Services. جميع الحقوق محفوظة.",
+                direction: "rtl",
+                services: [
+                    { id: 'dev', label: 'تطوير مواقع/تطبيقات' },
+                    { id: 'design', label: 'تصميم جرافيك' },
+                    { id: 'video', label: 'مونتاج فيديو' },
+                    { id: 'animation', label: 'تحريك/ثري دي' },
+                    { id: 'audio', label: 'إنتاج صوتي' },
+                    { id: 'marketing', label: 'تسويق رقمي' }
+                ],
+                levels: [
+                    { value: 'junior', label: 'مبتدئ' },
+                    { value: 'intermediate', label: 'متوسط' },
+                    { value: 'senior', label: 'خبير' }
+                ],
+                msg_noservice: "يرجى اختيار خدمة واحدة على الأقل.",
+                msg_success: "تم إرسال التسجيل بنجاح! سنتواصل معك قريبًا.",
+                msg_error: "حدث خطأ أثناء الإرسال.",
+                msg_conn_error: "خطأ في الاتصال. يرجى المحاولة لاحقًا.",
+                nav_home: "الرئيسية"
+            },
+            en: {
+                form_title: "Talent Registration",
+                label_name: "Full name:",
+                label_email: "Email:",
+                label_portfolio: "Portfolio or professional link:",
+                label_services: "Offered services:",
+                label_bio: "About you:",
+                btn_submit: "Send",
+                rights: "© 2025 IaSmarket Services. All rights reserved.",
+                direction: "ltr",
+                services: [
+                    { id: 'dev', label: 'Web/App Development' },
+                    { id: 'design', label: 'Graphic Design' },
+                    { id: 'video', label: 'Video Editing' },
+                    { id: 'animation', label: 'Animation/3D' },
+                    { id: 'audio', label: 'Audio Production' },
+                    { id: 'marketing', label: 'Digital Marketing' }
+                ],
+                levels: [
+                    { value: 'junior', label: 'Beginner' },
+                    { value: 'intermediate', label: 'Intermediate' },
+                    { value: 'senior', label: 'Expert' }
+                ],
+                msg_noservice: "Please select at least one service.",
+                msg_success: "Registration sent successfully! We will contact you soon.",
+                msg_error: "Error while sending.",
+                msg_conn_error: "Connection error. Please try again later.",
+                nav_home: "Home"
+            }
+        };
+
+        let currentLang = "fr";
+        let darkMode = false;
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.body.style.direction = translations[lang].direction;
+            let logoContainer = document.getElementById('logo-container');
+            logoContainer.className = "logo-container " + translations[lang].direction;
+            let switchContainer = document.getElementById('switch-container');
+            switchContainer.className = "switch-container " + translations[lang].direction;
+            let card = document.getElementById('talent-card');
+            card.classList.remove("rtl","ltr");
+            card.classList.add(translations[lang].direction);
+            let navHome = document.getElementById('nav-home');
+            navHome.textContent = translations[lang].nav_home;
+            navHome.style.float = translations[lang].direction === "rtl" ? "right" : "left";
+            document.getElementById('form-title').textContent = translations[lang].form_title;
+            document.getElementById('label-name').textContent = translations[lang].label_name;
+            document.getElementById('label-email').textContent = translations[lang].label_email;
+            document.getElementById('label-portfolio').textContent = translations[lang].label_portfolio;
+            document.getElementById('label-services').textContent = translations[lang].label_services;
+            document.getElementById('label-bio').textContent = translations[lang].label_bio;
+            document.getElementById('btn-submit').textContent = translations[lang].btn_submit;
+            document.getElementById('footer-rights').textContent = translations[lang].rights;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+            renderServices();
+        }
+
+        function goTo(page) {
+            window.location.href = page;
+        }
+
+        function renderServices() {
+            const serviceListDiv = document.getElementById('servicesList');
+            serviceListDiv.innerHTML = "";
+            const services = translations[currentLang].services;
+            const levels = translations[currentLang].levels;
+            services.forEach(service => {
+                const row = document.createElement('div');
+                row.className = 'service-row';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = "checkbox";
+                checkbox.id = "service_" + service.id;
+                checkbox.name = "services";
+                checkbox.value = service.id;
+                checkbox.style.width = "20px";
+                checkbox.style.height = "20px";
+
+                const label = document.createElement('label');
+                label.htmlFor = "service_" + service.id;
+                label.textContent = service.label;
+
+                const select = document.createElement('select');
+                select.name = "level_" + service.id;
+                select.disabled = true;
+                levels.forEach(lvl => {
+                    const opt = document.createElement('option');
+                    opt.value = lvl.value;
+                    opt.textContent = lvl.label;
+                    select.appendChild(opt);
+                });
+
+                checkbox.addEventListener('change', function() {
+                    select.disabled = !checkbox.checked;
+                });
+
+                row.appendChild(checkbox);
+                row.appendChild(label);
+                row.appendChild(select);
+                serviceListDiv.appendChild(row);
+            });
+        }
+
+        document.getElementById('talentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = {
+                name: form.name.value,
+                email: form.email.value,
+                portfolio: form.portfolio.value,
+                bio: form.bio.value,
+                services: []
+            };
+
+            const services = translations[currentLang].services;
+            services.forEach(service => {
+                const checked = document.getElementById('service_' + service.id).checked;
+                if (checked) {
+                    formData.services.push({
+                        id: service.id,
+                        label: service.label,
+                        level: form["level_" + service.id].value
+                    });
+                }
+            });
+
+            if (formData.services.length === 0) {
+                showMsg(translations[currentLang].msg_noservice, true);
+                return;
+            }
+
+            fetch("https://your-cloudflare-tunnel-url.com/api/talent/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.success) {
+                    showMsg(translations[currentLang].msg_success, false);
+                    form.reset();
+                    document.querySelectorAll('.service-row select').forEach(select => select.disabled = true);
+                } else {
+                    showMsg(translations[currentLang].msg_error + " " + (data.message || ""), true);
+                }
+            })
+            .catch(() => {
+                showMsg(translations[currentLang].msg_conn_error, true);
+            });
+        });
+
+        function showMsg(msg, isError) {
+            const resultDiv = document.getElementById('resultMsg');
+            resultDiv.textContent = msg;
+            resultDiv.className = isError ? 'error' : 'success';
+        }
+
+        function toggleTheme() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+            document.getElementById('theme-btn').classList.toggle('active', darkMode);
+        }
+
+        window.onload = function() {
+            setLang(currentLang);
+        };
+    </script>
+</body>
+</html>
