@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace Client - LOGICAL</title>
+    <title>Inscription Talent - LOGICAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -150,6 +150,27 @@
             gap: 24px;
             margin-bottom: 16px;
         }
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 10px;
+        }
+        .service-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #f3f7f6;
+            padding: 10px 14px;
+            border-radius: 10px;
+        }
+        .service-row label, .service-row select {
+            margin: 0;
+        }
+        .service-row select {
+            min-width: 160px;
+            font-size: 0.97rem;
+        }
         .btn-main {
             background: #00c9a7;
             color: #fff;
@@ -163,6 +184,9 @@
             width: 100%;
             box-shadow: 0 1px 8px rgba(0,0,0,0.07);
             transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
         .btn-main:hover {
             background: #008a6f;
@@ -176,9 +200,6 @@
         }
         .success { background: #d8fae9; color: #008a6f;}
         .error { background: #ffd3d3; color: #9b1212;}
-        .file-group {
-            margin-top: 10px;
-        }
         @media (max-width: 700px) {
             .card { padding: 18px 7px;}
             h2 { font-size: 1.3rem;}
@@ -209,21 +230,22 @@
         </div>
     </header>
     <nav>
-        <button class="nav-btn" id="nav-home" onclick="goTo('index.html');return false;">Home</button>
+        <button class="nav-btn" id="nav-home" onclick="goTo('https://iasmarket.com/LogiCall');return false;">Home</button>
     </nav>
-    <div class="card ltr" id="client-card">
-        <h2 id="form-title">Espace Client</h2>
-        <form id="clientForm">
+
+    <div class="card ltr" id="talent-card">
+        <h2 id="form-title">Inscription Talent</h2>
+        <form id="talentForm">
             <div class="form-group">
-                <label id="label-type">Type de client :</label>
+                <label id="label-type">Type :</label>
                 <div class="radio-group" id="radio-type">
-                    <label><input type="radio" name="clientType" value="physique" checked> <span id="type-physique">Personne physique</span></label>
-                    <label><input type="radio" name="clientType" value="morale"> <span id="type-morale">Personne morale</span></label>
+                    <label><input type="radio" name="talentType" value="physique" checked> <span id="type-physique">Personne physique</span></label>
+                    <label><input type="radio" name="talentType" value="morale"> <span id="type-morale">Personne morale</span></label>
                 </div>
             </div>
             <div id="physique-fields">
                 <div class="form-group">
-                    <label for="name" id="label-name">Nom & Prénom :</label>
+                    <label for="name" id="label-name">Nom complet :</label>
                     <input type="text" id="name" name="name" required placeholder="Votre nom et prénom">
                 </div>
                 <div class="form-group">
@@ -233,6 +255,10 @@
                 <div class="form-group">
                     <label for="phone" id="label-phone">Téléphone :</label>
                     <input type="tel" id="phone" name="phone" required placeholder="Votre numéro">
+                </div>
+                <div class="form-group">
+                    <label for="portfolio" id="label-portfolio">Portfolio ou lien professionnel :</label>
+                    <input type="url" id="portfolio" name="portfolio" placeholder="Lien (Behance, Github, etc)">
                 </div>
             </div>
             <div id="morale-fields" style="display:none;">
@@ -256,14 +282,18 @@
                     <label for="phoneMorale" id="label-phoneMorale">Téléphone :</label>
                     <input type="tel" id="phoneMorale" name="phoneMorale" placeholder="Numéro de l’entreprise">
                 </div>
+                <div class="form-group">
+                    <label for="portfolioMorale" id="label-portfolioMorale">Portfolio ou lien professionnel :</label>
+                    <input type="url" id="portfolioMorale" name="portfolioMorale" placeholder="Lien (site, Github, etc)">
+                </div>
             </div>
             <div class="form-group">
-                <label for="description" id="label-description">Description du projet / Cahier des charges :</label>
-                <textarea id="description" name="description" rows="3" required placeholder="Décrivez votre besoin ou attachez le cahier des charges..."></textarea>
+                <label id="label-services">Services proposés :</label>
+                <div class="services-list" id="servicesList"></div>
             </div>
-            <div class="form-group file-group">
-                <label for="specFile" id="label-specFile">Attacher un fichier (PDF, DOC, etc) :</label>
-                <input type="file" id="specFile" name="specFile" accept=".pdf,.doc,.docx">
+            <div class="form-group">
+                <label for="bio" id="label-bio">Présentation / Bio :</label>
+                <textarea id="bio" name="bio" rows="3" placeholder="Quelques mots sur vous..."></textarea>
             </div>
             <button class="btn-main" type="submit" id="btn-submit">Envoyer</button>
             <div id="resultMsg"></div>
@@ -276,11 +306,11 @@
         // Traductions
         const translations = {
             fr: {
-                form_title: "Espace Client",
-                label_type: "Type de client :",
+                form_title: "Inscription Talent",
+                label_type: "Type :",
                 type_physique: "Personne physique",
                 type_morale: "Personne morale",
-                label_name: "Nom & Prénom :",
+                label_name: "Nom complet :",
                 label_email: "Email :",
                 label_phone: "Téléphone :",
                 label_company: "Raison sociale :",
@@ -288,19 +318,35 @@
                 label_responsible: "Nom du responsable :",
                 label_emailMorale: "Email :",
                 label_phoneMorale: "Téléphone :",
-                label_description: "Description du projet / Cahier des charges :",
-                label_specFile: "Attacher un fichier (PDF, DOC, etc) :",
+                label_portfolio: "Portfolio ou lien professionnel :",
+                label_portfolioMorale: "Portfolio ou lien professionnel :",
+                label_services: "Services proposés :",
+                label_bio: "Présentation / Bio :",
                 btn_submit: "Envoyer",
                 rights: "© 2025 IaSmarket Services. Tous droits réservés.",
                 direction: "ltr",
-                msg_success: "Demande envoyée avec succès ! Nous reviendrons vers vous rapidement.",
+                services: [
+                    { id: 'dev', label: 'Développement web/app' },
+                    { id: 'design', label: 'Design graphique' },
+                    { id: 'video', label: 'Montage vidéo' },
+                    { id: 'animation', label: 'Animation/3D' },
+                    { id: 'audio', label: 'Production audio' },
+                    { id: 'marketing', label: 'Marketing digital' }
+                ],
+                levels: [
+                    { value: 'junior', label: 'Débutant' },
+                    { value: 'intermediate', label: 'Intermédiaire' },
+                    { value: 'senior', label: 'Expert' }
+                ],
+                msg_noservice: "Veuillez sélectionner au moins un service.",
+                msg_success: "Inscription envoyée avec succès ! Nous vous contacterons bientôt.",
                 msg_error: "Erreur lors de l'envoi.",
                 msg_conn_error: "Erreur de connexion. Veuillez réessayer plus tard.",
                 nav_home: "Accueil"
             },
             ar: {
-                form_title: "فضاء العملاء",
-                label_type: "نوع العميل :",
+                form_title: "تسجيل المبدع",
+                label_type: "النوع :",
                 type_physique: "شخص طبيعي",
                 type_morale: "شخص معنوي",
                 label_name: "الاسم الكامل :",
@@ -310,20 +356,36 @@
                 label_nif: "الرقم الجبائي / السجل :",
                 label_responsible: "اسم المسؤول :",
                 label_emailMorale: "البريد الإلكتروني :",
-                label_phoneMorale: "هاتف الشركة :",
-                label_description: "وصف المشروع / دفتر الشروط :",
-                label_specFile: "إرفاق ملف (PDF، DOC، إلخ) :",
+                label_phoneMorale: "الهاتف :",
+                label_portfolio: "رابط أعمال أو ملف شخصي :",
+                label_portfolioMorale: "رابط أعمال أو ملف الشركة :",
+                label_services: "الخدمات التي تقدمها :",
+                label_bio: "نبذة عنك :",
                 btn_submit: "إرسال",
                 rights: "© 2025 IaSmarket Services. جميع الحقوق محفوظة.",
                 direction: "rtl",
-                msg_success: "تم إرسال الطلب بنجاح! سنعود إليكم قريبًا.",
+                services: [
+                    { id: 'dev', label: 'تطوير مواقع/تطبيقات' },
+                    { id: 'design', label: 'تصميم جرافيك' },
+                    { id: 'video', label: 'مونتاج فيديو' },
+                    { id: 'animation', label: 'تحريك/ثري دي' },
+                    { id: 'audio', label: 'إنتاج صوتي' },
+                    { id: 'marketing', label: 'تسويق رقمي' }
+                ],
+                levels: [
+                    { value: 'junior', label: 'مبتدئ' },
+                    { value: 'intermediate', label: 'متوسط' },
+                    { value: 'senior', label: 'خبير' }
+                ],
+                msg_noservice: "يرجى اختيار خدمة واحدة على الأقل.",
+                msg_success: "تم إرسال التسجيل بنجاح! سنتواصل معك قريبًا.",
                 msg_error: "حدث خطأ أثناء الإرسال.",
                 msg_conn_error: "خطأ في الاتصال. يرجى المحاولة لاحقًا.",
                 nav_home: "الرئيسية"
             },
             en: {
-                form_title: "Client Space",
-                label_type: "Client type:",
+                form_title: "Talent Registration",
+                label_type: "Type:",
                 type_physique: "Individual",
                 type_morale: "Legal entity",
                 label_name: "Full name:",
@@ -333,13 +395,29 @@
                 label_nif: "NIF / Register:",
                 label_responsible: "Responsible person:",
                 label_emailMorale: "Email:",
-                label_phoneMorale: "Company phone:",
-                label_description: "Project description / Specifications:",
-                label_specFile: "Attach a file (PDF, DOC, etc):",
+                label_phoneMorale: "Phone:",
+                label_portfolio: "Portfolio or professional link:",
+                label_portfolioMorale: "Portfolio or company link:",
+                label_services: "Offered services:",
+                label_bio: "About you:",
                 btn_submit: "Send",
                 rights: "© 2025 IaSmarket Services. All rights reserved.",
                 direction: "ltr",
-                msg_success: "Request sent successfully! We will contact you soon.",
+                services: [
+                    { id: 'dev', label: 'Web/App Development' },
+                    { id: 'design', label: 'Graphic Design' },
+                    { id: 'video', label: 'Video Editing' },
+                    { id: 'animation', label: 'Animation/3D' },
+                    { id: 'audio', label: 'Audio Production' },
+                    { id: 'marketing', label: 'Digital Marketing' }
+                ],
+                levels: [
+                    { value: 'junior', label: 'Beginner' },
+                    { value: 'intermediate', label: 'Intermediate' },
+                    { value: 'senior', label: 'Expert' }
+                ],
+                msg_noservice: "Please select at least one service.",
+                msg_success: "Registration sent successfully! We will contact you soon.",
                 msg_error: "Error while sending.",
                 msg_conn_error: "Connection error. Please try again later.",
                 nav_home: "Home"
@@ -357,7 +435,7 @@
             logoContainer.className = "logo-container " + translations[lang].direction;
             let switchContainer = document.getElementById('switch-container');
             switchContainer.className = "switch-container " + translations[lang].direction;
-            let card = document.getElementById('client-card');
+            let card = document.getElementById('talent-card');
             card.classList.remove("rtl","ltr");
             card.classList.add(translations[lang].direction);
             let navHome = document.getElementById('nav-home');
@@ -375,58 +453,128 @@
             document.getElementById('label-responsible').textContent = translations[lang].label_responsible;
             document.getElementById('label-emailMorale').textContent = translations[lang].label_emailMorale;
             document.getElementById('label-phoneMorale').textContent = translations[lang].label_phoneMorale;
-            document.getElementById('label-description').textContent = translations[lang].label_description;
-            document.getElementById('label-specFile').textContent = translations[lang].label_specFile;
+            document.getElementById('label-portfolio').textContent = translations[lang].label_portfolio;
+            document.getElementById('label-portfolioMorale').textContent = translations[lang].label_portfolioMorale;
+            document.getElementById('label-services').textContent = translations[lang].label_services;
+            document.getElementById('label-bio').textContent = translations[lang].label_bio;
             document.getElementById('btn-submit').textContent = translations[lang].btn_submit;
             document.getElementById('footer-rights').textContent = translations[lang].rights;
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('lang-' + lang).classList.add('active');
+            renderServices();
         }
 
         function goTo(page) {
             window.location.href = page;
         }
 
+        // Type de talent : affichage des champs
         document.getElementById('radio-type').addEventListener('change', function(e) {
-            const type = document.querySelector('input[name="clientType"]:checked').value;
+            const type = document.querySelector('input[name="talentType"]:checked').value;
             document.getElementById('physique-fields').style.display = (type === "physique") ? "block" : "none";
             document.getElementById('morale-fields').style.display = (type === "morale") ? "block" : "none";
             document.getElementById('name').required = (type === "physique");
             document.getElementById('email').required = (type === "physique");
             document.getElementById('phone').required = (type === "physique");
+            document.getElementById('portfolio').required = false;
             document.getElementById('company').required = (type === "morale");
             document.getElementById('nif').required = (type === "morale");
             document.getElementById('responsible').required = (type === "morale");
             document.getElementById('emailMorale').required = (type === "morale");
             document.getElementById('phoneMorale').required = (type === "morale");
+            document.getElementById('portfolioMorale').required = false;
         });
 
-        document.getElementById('clientForm').addEventListener('submit', function(e) {
+        function renderServices() {
+            const serviceListDiv = document.getElementById('servicesList');
+            serviceListDiv.innerHTML = "";
+            const services = translations[currentLang].services;
+            const levels = translations[currentLang].levels;
+            services.forEach(service => {
+                const row = document.createElement('div');
+                row.className = 'service-row';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = "checkbox";
+                checkbox.id = "service_" + service.id;
+                checkbox.name = "services";
+                checkbox.value = service.id;
+                checkbox.style.width = "20px";
+                checkbox.style.height = "20px";
+
+                const label = document.createElement('label');
+                label.htmlFor = "service_" + service.id;
+                label.textContent = service.label;
+
+                const select = document.createElement('select');
+                select.name = "level_" + service.id;
+                select.disabled = true;
+                levels.forEach(lvl => {
+                    const opt = document.createElement('option');
+                    opt.value = lvl.value;
+                    opt.textContent = lvl.label;
+                    select.appendChild(opt);
+                });
+
+                checkbox.addEventListener('change', function() {
+                    select.disabled = !checkbox.checked;
+                });
+
+                row.appendChild(checkbox);
+                row.appendChild(label);
+                row.appendChild(select);
+                serviceListDiv.appendChild(row);
+            });
+        }
+
+        document.getElementById('talentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const form = e.target;
-            const type = document.querySelector('input[name="clientType"]:checked').value;
-            let formData = new FormData();
-            formData.append("type", type);
+            const type = document.querySelector('input[name="talentType"]:checked').value;
+            const formData = {
+                type: type,
+                services: [],
+                bio: form.bio.value
+            };
 
-            if (type === "physique") {
-                formData.append("name", form.name.value);
-                formData.append("email", form.email.value);
-                formData.append("phone", form.phone.value);
+            const services = translations[currentLang].services;
+            services.forEach(service => {
+                const checked = document.getElementById('service_' + service.id).checked;
+                if (checked) {
+                    formData.services.push({
+                        id: service.id,
+                        label: service.label,
+                        level: form["level_" + service.id].value
+                    });
+                }
+            });
+
+            if (formData.services.length === 0) {
+                showMsg(translations[currentLang].msg_noservice, true);
+                return;
+            }
+
+            if(type === "physique") {
+                formData.name = form.name.value;
+                formData.email = form.email.value;
+                formData.phone = form.phone.value;
+                formData.portfolio = form.portfolio.value;
             } else {
-                formData.append("company", form.company.value);
-                formData.append("nif", form.nif.value);
-                formData.append("responsible", form.responsible.value);
-                formData.append("emailMorale", form.emailMorale.value);
-                formData.append("phoneMorale", form.phoneMorale.value);
-            }
-            formData.append("description", form.description.value);
-            if (form.specFile.files.length > 0) {
-                formData.append("specFile", form.specFile.files[0]);
+                formData.company = form.company.value;
+                formData.nif = form.nif.value;
+                formData.responsible = form.responsible.value;
+                formData.emailMorale = form.emailMorale.value;
+                formData.phoneMorale = form.phoneMorale.value;
+                formData.portfolioMorale = form.portfolioMorale.value;
             }
 
-            fetch("https://your-cloudflare-tunnel-url.com/api/client/register", {
+            // Envoi via Cloudflare Tunnel (remplacer l'URL)
+            fetch("https://your-cloudflare-tunnel-url.com/api/talent/register", {
                 method: "POST",
-                body: formData
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
             })
             .then(resp => resp.json())
             .then(data => {
@@ -435,6 +583,7 @@
                     form.reset();
                     document.getElementById('physique-fields').style.display = "block";
                     document.getElementById('morale-fields').style.display = "none";
+                    document.querySelectorAll('.service-row select').forEach(select => select.disabled = true);
                 } else {
                     showMsg(translations[currentLang].msg_error + " " + (data.message || ""), true);
                 }
