@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGICAL - IaSmarket Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #00c9a7;
+            --main-dark: #008a6f;
+            --bg: #f4f8fb;
+            --card: #fff;
+            --text: #232526;
+            --accent: #eaeaea;
+            --shadow: 0 2px 24px 0 rgba(0,0,0,0.12);
+        }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: var(--bg) url('https://www.transparenttextures.com/patterns/cubes.png');
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.2s, color 0.2s;
+            direction: ltr;
+        }
+        .dark-mode {
+            background: linear-gradient(120deg, #232526 60%, #2b5876 100%);
+            color: #f4f8fb;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px 0 32px;
+            background: transparent;
+            position: relative;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-container.ltr { flex-direction: row; }
+        .logo-container.rtl { flex-direction: row-reverse; }
+        .logo-img {
+            height: 48px;
+        }
+        .logo-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--main);
+        }
+        .switch-container {
+            display: flex;
+            gap: 8px;
+        }
+        .switch-container.ltr { flex-direction: row; }
+        .switch-container.rtl { flex-direction: row-reverse; }
+        .lang-btn, .theme-btn {
+            background: var(--main);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 7px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            transition: background 0.2s, color 0.2s;
+        }
+        .lang-btn.active, .theme-btn.active, .lang-btn:hover, .theme-btn:hover {
+            background: var(--main-dark);
+            color: #fff;
+        }
+        nav {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            margin: 22px 0 0 0;
+        }
+        .nav-btn {
+            background: var(--card);
+            color: var(--main-dark);
+            border: 2px solid var(--main);
+            border-radius: 22px;
+            padding: 10px 30px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s, border 0.18s;
+        }
+        .nav-btn.active, .nav-btn:hover {
+            background: var(--main);
+            color: #fff;
+            border: 2px solid var(--main-dark);
+        }
+        .card {
+            max-width: 800px;
+            margin: 32px auto 0 auto;
+            background: var(--card);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 36px 30px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dark-mode .card {
+            background: #2b5876;
+            color: #f4f8fb;
+        }
+        .card.rtl {
+            direction: rtl;
+            text-align: right;
+        }
+        .card.ltr {
+            direction: ltr;
+            text-align: left;
+        }
+        .section-title {
+            font-size: 1.42rem;
+            font-weight: 700;
+            color: var(--main-dark);
+            margin-bottom: 16px;
+        }
+        .dark-mode .section-title {
+            color: #00c9a7;
+        }
+        .intro {
+            font-size: 1.09rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .platform-img {
+            width: 100%;
+            border-radius: 13px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+        }
+        .btn-main {
+            background: var(--main);
+            color: #fff;
+            padding: 12px 34px;
+            border: none;
+            border-radius: 19px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 13px;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.09);
+            transition: background 0.2s;
+        }
+        .btn-main:hover {
+            background: var(--main-dark);
+            color: #fff;
+        }
+        ul {
+            margin: 18px 0 0 0;
+            padding: 0 0 0 24px;
+            font-size: 1.05rem;
+        }
+        .card.rtl ul { padding: 0 24px 0 0; }
+        footer {
+            background: var(--main-dark);
+            color: #fff;
+            text-align: center;
+            padding: 18px 0 10px 0;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 0 0 18px 18px;
+            margin-top: 48px;
+        }
+        @media (max-width: 900px) {
+            .card { padding: 24px 8px; }
+            .logo-title { font-size: 1.2rem; }
+            .nav-btn { padding: 9px 10px; font-size: 1rem;}
+            header { padding: 12px 8px 0 8px;}
+        }
+    </style>
+    <script>
+        // Traductions
+        const translations = {
+            fr: {
+                presentation: "Présentation",
+                talents: "Espace Talents",
+                clients: "Espace Clients",
+                intro_title: "Présentation",
+                intro: "<strong>LOGICAL</strong> est la plateforme innovante de <strong>IaSmarket Services</strong> qui connecte les talents du digital (programmeurs, développeurs, monteurs, artistes numériques) avec des entreprises et clients en quête de solutions modernes.<br>Notre interface simplifie la mise en relation, l’inscription des talents, et la gestion des demandes de services, tout en garantissant efficacité, rapidité et sécurité. Rejoignez un écosystème digital futuriste, orienté vers la réussite de vos projets !",
+                talents_title: "Espace Talents",
+                talents_text: "Vous êtes développeur·se, artiste numérique, monteur ou expert du digital ?<br>Rejoignez LOGICAL et intégrez des projets variés, valorisez vos compétences et accédez à des opportunités uniques.",
+                talents_btn: "Inscription Talent",
+                talents_features: ["Inscription rapide et simplifiée", "Accès à des missions adaptées à votre profil", "Valorisation de votre portfolio"],
+                clients_title: "Espace Clients",
+                clients_text: "Entreprises, startups, particuliers : accédez aux meilleurs talents du digital pour réaliser vos projets.<br>Soumettez votre cahier des charges, suivez vos missions et bénéficiez d’un accompagnement sur-mesure.",
+                clients_btn: "Soumettre un projet",
+                clients_features: ["Dépôt simplifié de votre cahier des charges", "Suivi personnalisé de vos demandes", "Réponse rapide & professionnelle"],
+                rights: "© 2025 IaSmarket Services. Tous droits réservés.",
+                direction: "ltr"
+            },
+            ar: {
+                presentation: "المقدمة",
+                talents: "فضاء المبدعين",
+                clients: "فضاء العملاء",
+                intro_title: "المقدمة",
+                intro: "<strong>LOGICAL</strong> هي منصة مبتكرة من <strong>IaSmarket Services</strong> تجمع بين المواهب الرقمية (مبرمجون، مطورون، فنانون رقميون...) والعملاء الباحثين عن حلول عصرية.<br>واجهة المنصة تسهّل التواصل، تسجيل المواهب، وإدارة طلبات الخدمات، مع ضمان السرعة والأمان. انضموا إلى منظومة رقمية حديثة تدفع نجاح مشاريعكم!",
+                talents_title: "فضاء المبدعين",
+                talents_text: "هل أنت مبرمج أو فنان رقمي أو خبير في المجال الرقمي؟<br>انضم إلى LOGICAL وشارك في مشاريع متنوعة، وبرز مهاراتك، واحصل على فرص فريدة.",
+                talents_btn: "تسجيل كمبدع",
+                talents_features: ["تسجيل سريع وفعّال", "فرص عمل حسب ملفك", "عرض أعمالك الرقمية"],
+                clients_title: "فضاء العملاء",
+                clients_text: "شركات، ناشطون، أفراد: يمكنكم الوصول إلى أفضل المواهب الرقمية لإنجاز مشاريعكم.<br>قدّم دفتر الشروط، تابع تقدم المشروع، واستفد من دعم مخصص.",
+                clients_btn: "إيداع مشروع",
+                clients_features: ["إيداع دفتر الشروط بسهولة", "متابعة الطلبات بشكل شخصي", "استجابة سريعة واحترافية"],
+                rights: "© 2025 IaSmarket Services. جميع الحقوق محفوظة.",
+                direction: "rtl"
+            },
+            en: {
+                presentation: "Introduction",
+                talents: "Talent Space",
+                clients: "Client Space",
+                intro_title: "Introduction",
+                intro: "<strong>LOGICAL</strong> is the innovative platform by <strong>IaSmarket Services</strong> connecting digital talents (programmers, developers, editors, digital artists) with companies and clients seeking modern solutions.<br>Our interface streamlines connections, talent registration, and service requests, ensuring efficiency, speed, and security. Join a futuristic digital ecosystem for your project’s success!",
+                talents_title: "Talent Space",
+                talents_text: "Are you a developer, digital artist, editor, or digital expert?<br>Join LOGICAL, work on diverse projects, showcase your skills, and access unique opportunities.",
+                talents_btn: "Register as Talent",
+                talents_features: ["Fast & easy registration", "Access to tailored missions", "Showcase your portfolio"],
+                clients_title: "Client Space",
+                clients_text: "Companies, startups, individuals: access top digital talents for your projects.<br>Submit your specifications, track your missions, and benefit from personalized support.",
+                clients_btn: "Submit a Project",
+                clients_features: ["Easy submission of your specifications", "Personalized request tracking", "Fast & professional response"],
+                rights: "© 2025 IaSmarket Services. All rights reserved.",
+                direction: "ltr"
+            }
+        };
+
+        let currentLang = "fr";
+        let darkMode = false;
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.body.style.direction = translations[lang].direction;
+            // Logo position
+            let logoContainer = document.getElementById('logo-container');
+            logoContainer.className = "logo-container " + translations[lang].direction;
+            // Button position
+            let switchContainer = document.getElementById('switch-container');
+            switchContainer.className = "switch-container " + translations[lang].direction;
+            // Nav direction
+            let navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => btn.style.float = translations[lang].direction === "rtl" ? "right" : "left");
+            // Card direction
+            document.querySelectorAll('.card').forEach(c => {
+                c.classList.remove("rtl","ltr");
+                c.classList.add(translations[lang].direction);
+            });
+            // Update menu
+            document.getElementById('nav-presentation').textContent = translations[lang].presentation;
+            document.getElementById('nav-talents').textContent = translations[lang].talents;
+            document.getElementById('nav-clients').textContent = translations[lang].clients;
+            // Update sections
+            document.getElementById('presentation-title').textContent = translations[lang].intro_title;
+            document.getElementById('presentation-text').innerHTML = translations[lang].intro;
+            document.getElementById('talents-title').textContent = translations[lang].talents_title;
+            document.getElementById('talents-text').innerHTML = translations[lang].talents_text;
+            document.getElementById('talents-btn').textContent = translations[lang].talents_btn;
+            document.getElementById('talents-features').innerHTML = translations[lang].talents_features.map(f => `<li>${f}</li>`).join('');
+            document.getElementById('clients-title').textContent = translations[lang].clients_title;
+            document.getElementById('clients-text').innerHTML = translations[lang].clients_text;
+            document.getElementById('clients-btn').textContent = translations[lang].clients_btn;
+            document.getElementById('clients-features').innerHTML = translations[lang].clients_features.map(f => `<li>${f}</li>`).join('');
+            // Update footer
+            document.getElementById('footer-rights').textContent = translations[lang].rights;
+            // Active lang button
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('nav-' + id).classList.add('active');
+        }
+
+        function toggleTheme() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+            document.getElementById('theme-btn').classList.toggle('active', darkMode);
+        }
+
+        window.onload = function() {
+            setLang(currentLang);
+            showSection('presentation');
+        };
+    </script>
+</head>
+<body>
+    <header>
+        <div id="logo-container" class="logo-container ltr">
+            <!-- Changez le logo si besoin -->
+            <img src="https://raw.githubusercontent.com/iasmarket/iasmarket/main/logo.png" alt="IaSmarket Logo" class="logo-img" />
+            <span class="logo-title">LOGICAL</span>
+        </div>
+        <div id="switch-container" class="switch-container ltr">
+            <button class="lang-btn" id="lang-fr" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn" id="lang-ar" onclick="setLang('ar')">AR</button>
+            <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+            <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Changer le mode">🌓</button>
+        </div>
+    </header>
+    <nav>
+        <button class="nav-btn active" id="nav-presentation" onclick="showSection('presentation');return false;">Présentation</button>
+        <button class="nav-btn" id="nav-talents" onclick="showSection('talents');return false;">Espace Talents</button>
+        <button class="nav-btn" id="nav-clients" onclick="showSection('clients');return false;">Espace Clients</button>
+    </nav>
+
+    <div class="card ltr" id="presentation">
+        <h2 class="section-title" id="presentation-title"></h2>
+        <p class="intro" id="presentation-text"></p>
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=80" alt="Plateforme LOGICAL" class="platform-img">
+    </div>
+
+    <div class="card ltr" id="talents" style="display:none;">
+        <h2 class="section-title" id="talents-title"></h2>
+        <p id="talents-text"></p>
+        <button class="btn-main" id="talents-btn"></button>
+        <ul id="talents-features"></ul>
+    </div>
+
+    <div class="card ltr" id="clients" style="display:none;">
+        <h2 class="section-title" id="clients-title"></h2>
+        <p id="clients-text"></p>
+        <button class="btn-main" id="clients-btn"></button>
+        <ul id="clients-features"></ul>
+    </div>
+
+    <footer>
+        <span id="footer-rights"></span>
+    </footer>
+</body>
+</html>
