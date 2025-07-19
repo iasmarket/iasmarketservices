@@ -178,6 +178,7 @@
             header { padding: 12px 8px 0 8px;}
         }
     </style>
+    
     <script>
         // Traductions
         const translations = {
@@ -323,19 +324,27 @@
     </div>
 
     <div class="card ltr" id="talents" style="display:none;">
-        <h2 class="section-title" id="talents-title"></h2>
-        <p id="talents-text"></p>
-        <button class="btn-main" id="talents-btn"></button>
-        <ul id="talents-features"></ul>
+      <h2 class="section-title" id="talents-title"></h2>
+      <p id="talents-text"></p>
+
+      <!-- Bouton principal (lien stylisé en bouton) -->
+      <a href="https://iasmarket.com/logicalltalents" class="btn-main" id="talents-btn">Voir Talents</a>
+
+      <ul id="talents-features"></ul>
     </div>
+
 
     <div class="card ltr" id="clients" style="display:none;">
         <h2 class="section-title" id="clients-title"></h2>
         <p id="clients-text"></p>
-        <button class="btn-main" id="clients-btn"></button>
+        
+        <!-- Bouton principal sous forme de lien -->
+        <a href="https://iasmarket.com/logicallclients" class="btn-main" id="clients-btn">Voir Clients</a>
+        
         <ul id="clients-features"></ul>
     </div>
 
+     
     <footer>
         <span id="footer-rights"></span>
     </footer>
