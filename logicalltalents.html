@@ -145,6 +145,11 @@
             border-color: #00c9a7;
             outline: none;
         }
+        .radio-group {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
         .services-list {
             display: flex;
             flex-direction: column;
@@ -179,6 +184,9 @@
             width: 100%;
             box-shadow: 0 1px 8px rgba(0,0,0,0.07);
             transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
         .btn-main:hover {
             background: #008a6f;
@@ -222,23 +230,62 @@
         </div>
     </header>
     <nav>
-        <button class="nav-btn" id="nav-home" onclick="goTo('index.html');return false;">Home</button>
+        <button class="nav-btn" id="nav-home" onclick="goTo('https://iasmarket.com/LogiCall');return false;">Home</button>
     </nav>
 
     <div class="card ltr" id="talent-card">
         <h2 id="form-title">Inscription Talent</h2>
         <form id="talentForm">
             <div class="form-group">
-                <label for="name" id="label-name">Nom complet :</label>
-                <input type="text" id="name" name="name" required placeholder="Votre nom et prénom">
+                <label id="label-type">Type :</label>
+                <div class="radio-group" id="radio-type">
+                    <label><input type="radio" name="talentType" value="physique" checked> <span id="type-physique">Personne physique</span></label>
+                    <label><input type="radio" name="talentType" value="morale"> <span id="type-morale">Personne morale</span></label>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email" id="label-email">Email :</label>
-                <input type="email" id="email" name="email" required placeholder="exemple@mail.com">
+            <div id="physique-fields">
+                <div class="form-group">
+                    <label for="name" id="label-name">Nom complet :</label>
+                    <input type="text" id="name" name="name" required placeholder="Votre nom et prénom">
+                </div>
+                <div class="form-group">
+                    <label for="email" id="label-email">Email :</label>
+                    <input type="email" id="email" name="email" required placeholder="exemple@mail.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone" id="label-phone">Téléphone :</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Votre numéro">
+                </div>
+                <div class="form-group">
+                    <label for="portfolio" id="label-portfolio">Portfolio ou lien professionnel :</label>
+                    <input type="url" id="portfolio" name="portfolio" placeholder="Lien (Behance, Github, etc)">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="portfolio" id="label-portfolio">Portfolio ou lien professionnel :</label>
-                <input type="url" id="portfolio" name="portfolio" placeholder="Lien (Behance, Github, etc)">
+            <div id="morale-fields" style="display:none;">
+                <div class="form-group">
+                    <label for="company" id="label-company">Raison sociale :</label>
+                    <input type="text" id="company" name="company" placeholder="Nom de l’entreprise">
+                </div>
+                <div class="form-group">
+                    <label for="nif" id="label-nif">NIF / Registre :</label>
+                    <input type="text" id="nif" name="nif" placeholder="Identifiant fiscal">
+                </div>
+                <div class="form-group">
+                    <label for="responsible" id="label-responsible">Nom du responsable :</label>
+                    <input type="text" id="responsible" name="responsible" placeholder="Nom du responsable">
+                </div>
+                <div class="form-group">
+                    <label for="emailMorale" id="label-emailMorale">Email :</label>
+                    <input type="email" id="emailMorale" name="emailMorale" placeholder="contact@entreprise.com">
+                </div>
+                <div class="form-group">
+                    <label for="phoneMorale" id="label-phoneMorale">Téléphone :</label>
+                    <input type="tel" id="phoneMorale" name="phoneMorale" placeholder="Numéro de l’entreprise">
+                </div>
+                <div class="form-group">
+                    <label for="portfolioMorale" id="label-portfolioMorale">Portfolio ou lien professionnel :</label>
+                    <input type="url" id="portfolioMorale" name="portfolioMorale" placeholder="Lien (site, Github, etc)">
+                </div>
             </div>
             <div class="form-group">
                 <label id="label-services">Services proposés :</label>
@@ -260,9 +307,19 @@
         const translations = {
             fr: {
                 form_title: "Inscription Talent",
+                label_type: "Type :",
+                type_physique: "Personne physique",
+                type_morale: "Personne morale",
                 label_name: "Nom complet :",
                 label_email: "Email :",
+                label_phone: "Téléphone :",
+                label_company: "Raison sociale :",
+                label_nif: "NIF / Registre :",
+                label_responsible: "Nom du responsable :",
+                label_emailMorale: "Email :",
+                label_phoneMorale: "Téléphone :",
                 label_portfolio: "Portfolio ou lien professionnel :",
+                label_portfolioMorale: "Portfolio ou lien professionnel :",
                 label_services: "Services proposés :",
                 label_bio: "Présentation / Bio :",
                 btn_submit: "Envoyer",
@@ -289,9 +346,19 @@
             },
             ar: {
                 form_title: "تسجيل المبدع",
+                label_type: "النوع :",
+                type_physique: "شخص طبيعي",
+                type_morale: "شخص معنوي",
                 label_name: "الاسم الكامل :",
                 label_email: "البريد الإلكتروني :",
+                label_phone: "الهاتف :",
+                label_company: "اسم الشركة :",
+                label_nif: "الرقم الجبائي / السجل :",
+                label_responsible: "اسم المسؤول :",
+                label_emailMorale: "البريد الإلكتروني :",
+                label_phoneMorale: "الهاتف :",
                 label_portfolio: "رابط أعمال أو ملف شخصي :",
+                label_portfolioMorale: "رابط أعمال أو ملف الشركة :",
                 label_services: "الخدمات التي تقدمها :",
                 label_bio: "نبذة عنك :",
                 btn_submit: "إرسال",
@@ -318,9 +385,19 @@
             },
             en: {
                 form_title: "Talent Registration",
+                label_type: "Type:",
+                type_physique: "Individual",
+                type_morale: "Legal entity",
                 label_name: "Full name:",
                 label_email: "Email:",
+                label_phone: "Phone:",
+                label_company: "Company name:",
+                label_nif: "NIF / Register:",
+                label_responsible: "Responsible person:",
+                label_emailMorale: "Email:",
+                label_phoneMorale: "Phone:",
                 label_portfolio: "Portfolio or professional link:",
+                label_portfolioMorale: "Portfolio or company link:",
                 label_services: "Offered services:",
                 label_bio: "About you:",
                 btn_submit: "Send",
@@ -365,9 +442,19 @@
             navHome.textContent = translations[lang].nav_home;
             navHome.style.float = translations[lang].direction === "rtl" ? "right" : "left";
             document.getElementById('form-title').textContent = translations[lang].form_title;
+            document.getElementById('label-type').textContent = translations[lang].label_type;
+            document.getElementById('type-physique').textContent = translations[lang].type_physique;
+            document.getElementById('type-morale').textContent = translations[lang].type_morale;
             document.getElementById('label-name').textContent = translations[lang].label_name;
             document.getElementById('label-email').textContent = translations[lang].label_email;
+            document.getElementById('label-phone').textContent = translations[lang].label_phone;
+            document.getElementById('label-company').textContent = translations[lang].label_company;
+            document.getElementById('label-nif').textContent = translations[lang].label_nif;
+            document.getElementById('label-responsible').textContent = translations[lang].label_responsible;
+            document.getElementById('label-emailMorale').textContent = translations[lang].label_emailMorale;
+            document.getElementById('label-phoneMorale').textContent = translations[lang].label_phoneMorale;
             document.getElementById('label-portfolio').textContent = translations[lang].label_portfolio;
+            document.getElementById('label-portfolioMorale').textContent = translations[lang].label_portfolioMorale;
             document.getElementById('label-services').textContent = translations[lang].label_services;
             document.getElementById('label-bio').textContent = translations[lang].label_bio;
             document.getElementById('btn-submit').textContent = translations[lang].btn_submit;
@@ -380,6 +467,23 @@
         function goTo(page) {
             window.location.href = page;
         }
+
+        // Type de talent : affichage des champs
+        document.getElementById('radio-type').addEventListener('change', function(e) {
+            const type = document.querySelector('input[name="talentType"]:checked').value;
+            document.getElementById('physique-fields').style.display = (type === "physique") ? "block" : "none";
+            document.getElementById('morale-fields').style.display = (type === "morale") ? "block" : "none";
+            document.getElementById('name').required = (type === "physique");
+            document.getElementById('email').required = (type === "physique");
+            document.getElementById('phone').required = (type === "physique");
+            document.getElementById('portfolio').required = false;
+            document.getElementById('company').required = (type === "morale");
+            document.getElementById('nif').required = (type === "morale");
+            document.getElementById('responsible').required = (type === "morale");
+            document.getElementById('emailMorale').required = (type === "morale");
+            document.getElementById('phoneMorale').required = (type === "morale");
+            document.getElementById('portfolioMorale').required = false;
+        });
 
         function renderServices() {
             const serviceListDiv = document.getElementById('servicesList');
@@ -426,12 +530,11 @@
         document.getElementById('talentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const form = e.target;
+            const type = document.querySelector('input[name="talentType"]:checked').value;
             const formData = {
-                name: form.name.value,
-                email: form.email.value,
-                portfolio: form.portfolio.value,
-                bio: form.bio.value,
-                services: []
+                type: type,
+                services: [],
+                bio: form.bio.value
             };
 
             const services = translations[currentLang].services;
@@ -451,6 +554,21 @@
                 return;
             }
 
+            if(type === "physique") {
+                formData.name = form.name.value;
+                formData.email = form.email.value;
+                formData.phone = form.phone.value;
+                formData.portfolio = form.portfolio.value;
+            } else {
+                formData.company = form.company.value;
+                formData.nif = form.nif.value;
+                formData.responsible = form.responsible.value;
+                formData.emailMorale = form.emailMorale.value;
+                formData.phoneMorale = form.phoneMorale.value;
+                formData.portfolioMorale = form.portfolioMorale.value;
+            }
+
+            // Envoi via Cloudflare Tunnel (remplacer l'URL)
             fetch("https://your-cloudflare-tunnel-url.com/api/talent/register", {
                 method: "POST",
                 headers: {
@@ -463,6 +581,8 @@
                 if (data.success) {
                     showMsg(translations[currentLang].msg_success, false);
                     form.reset();
+                    document.getElementById('physique-fields').style.display = "block";
+                    document.getElementById('morale-fields').style.display = "none";
                     document.querySelectorAll('.service-row select').forEach(select => select.disabled = true);
                 } else {
                     showMsg(translations[currentLang].msg_error + " " + (data.message || ""), true);
